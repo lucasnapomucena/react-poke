@@ -7,6 +7,7 @@ import api from '../../services/api';
 export default class Home extends Component {
   state = {
     person: [],
+    allPerson: [],
     newPerson: '',
   };
 
@@ -15,6 +16,18 @@ export default class Home extends Component {
       newPerson: e.target.value,
     });
   };
+
+  async componentDidMount() {
+    const response = await api.get(`/pokemon/`);
+
+    const data = {
+      allPerson: response.data,
+    };
+
+    this.setState({
+      allPerson: [data],
+    });
+  }
 
   handleAddPerson = async (e) => {
     e.preventDefault();
@@ -37,7 +50,7 @@ export default class Home extends Component {
   };
 
   render() {
-    const { person, newPerson } = this.state;
+    const { person, allPerson, newPerson } = this.state;
     return (
       <Container>
         <Form onSubmit={this.handleAddPerson}>
@@ -54,6 +67,7 @@ export default class Home extends Component {
             </button>
           </div>
         </Form>
+        <List />
         <List>
           {person.map((p) => (
             <li key={p.id}>
