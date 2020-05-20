@@ -23,7 +23,6 @@ export default class Home extends Component {
     const data = {
       allPerson: response.data,
     };
-
     this.setState({
       allPerson: [data],
     });
